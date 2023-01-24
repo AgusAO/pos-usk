@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Acces;
+use App\Models\User;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -15,14 +18,12 @@ class LoginController extends Controller
     public function index()
     {
         if ($user = Auth::user()) {
-            if ($user->level == '1') {
-                return redirect()->intended('beranda');
-            } elseif ($user->level == '2') {
-                return redirect()->intended('kasir');
-            }
+            return redirect()->intended('home');
         }
 
-        return view('login.login_view');
+        $akun = User::all()
+            ->count();
+        return view('login.login_view', compact('akun'));
     }
 
     public function proses(Request $request)
@@ -42,12 +43,9 @@ class LoginController extends Controller
         if (Auth::attempt($credential)) {
             $request->session()->regenerate();
             $user = Auth::user();
-            if ($user->level == '1') {
-                return redirect()->intended('beranda');
-            } elseif ($user->level == '2') {
-                return redirect()->intended('kasir');
+            if ($user) {
+                return redirect()->intended('home');
             }
-
             return redirect()->intended('/');
         }
 
@@ -67,6 +65,20 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
+    // view daftar akun
+    public function viewAkun()
+    {
+        $id_account = auth()->id();
+        $check_access = Acces::where('user', $id_account)
+            ->first();
+        if ($check_access->kelola_akun == 1) {
+            $users = User::all();
+            return view('manage_account.account', compact('users'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -83,9 +95,40 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function firstAkun(Request $request)
     {
-        //
+        // validate the request data
+        $validatedData = $request->validate([
+            'nama' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'username_2' => 'required|unique:users,username',
+            'password_2' => 'required|min:6'
+        ]);
+
+        // insert data into the users table
+        $user = User::create([
+            'name' => $validatedData['nama'],
+            'username' => $validatedData['username_2'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password_2']),
+            'foto' => 'default.jpg',
+            'level' => 'admin',
+            'remember_token' => Str::random(60)
+        ]);
+
+        // insert data into the access table and join it with the user table
+        Acces::create([
+            'user' => $user->id,
+            'kelola_akun' => 1,
+            'kelola_barang' => 1,
+            'transaksi' => 1,
+            'kelola_laporan' => 1
+        ]);
+
+        session()->flash('create_success', 'Akun baru berhasil dibuat');
+
+        return redirect(url('login'));
     }
 
     /**
