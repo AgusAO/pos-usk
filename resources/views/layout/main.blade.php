@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>AoMart | @yield('judul')</title>
+	<title>AoMart | {{ $judul }}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="{{ asset('/') }}atlantis/assets/img/icon.ico" type="image/x-icon"/>
 	@yield('css')
@@ -26,7 +26,7 @@
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="{{ asset('/') }}atlantis/assets/css/demo.css">
 </head>
-<body>
+<body data-background-color="blue">
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -82,18 +82,21 @@
 		</div>
 
 		<!-- Sidebar -->
-		<div class="sidebar sidebar-style-2" data-background-color="blue">			
+		<div class="sidebar sidebar-style-2" data-background-color="blue2">			
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
-							<img src="{{ asset('/') }}atlantis/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+							<img src="{{ asset('/') }}pictures/default.jpg" alt="..." class="avatar-img rounded-circle">
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									{{ $user->name }}
-									<span class="user-level">{{ $user->username }}</span>
+									{{-- @foreach ($user as $item) --}}
+											
+									{{ $masuk->name }}
+									{{-- @endforeach --}}
+									<span class="user-level">{{ $masuk->username }}</span>
 									<span class="caret"></span>
 								</span>
 							</a>
@@ -102,18 +105,8 @@
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
 									<li>
-										<a href="#profile">
+										<a href="{{ url('profile') }}">
 											<span class="link-collapse">My Profile</span>
-										</a>
-									</li>
-									<li>
-										<a href="#edit">
-											<span class="link-collapse">Edit Profile</span>
-										</a>
-									</li>
-									<li>
-										<a href="#settings">
-											<span class="link-collapse">Settings</span>
 										</a>
 									</li>
 								</ul>
@@ -130,7 +123,33 @@
 
 		<div class="main-panel">
 			<div class="content">
-					@yield('content')
+				<div class="page-inner">
+					<div class="page-header">
+							<h4 class="page-title">Dashboard</h4>
+							<ul class="breadcrumbs">
+									<li class="nav-home">
+											<a href="#">
+													<i class="flaticon-home"></i>
+											</a>
+									</li>
+									<li class="separator">
+											<i class="flaticon-right-arrow"></i>
+									</li>
+									<li class="nav-item">
+											<a href="#">Pages</a>
+									</li>
+									<li class="separator">
+											<i class="flaticon-right-arrow"></i>
+									</li>
+									<li class="nav-item">
+											<a href="#">Starter Page</a>
+									</li>
+							</ul>
+					</div>
+					<div class="page-category">
+						@yield('content')
+					</div>
+				</div>
 			</div>
 			<footer class="footer">
 					<div class="container-fluid">
@@ -159,7 +178,7 @@
 							</div>
 					</div>
 			</footer>
-	</div>
+		</div>
 		
 	</div>
 	<!--   Core JS Files   -->
@@ -199,6 +218,8 @@
 
 	<!-- Atlantis JS -->
 	<script src="{{ asset('/') }}atlantis/assets/js/atlantis.min.js"></script>
+
+	@stack('script')
 
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 	<script>

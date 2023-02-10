@@ -1,20 +1,18 @@
-{{-- <li class="nav-item {{ ($judul == 'Beranda') ? 'active' : '' }}"> --}}
-<li class="nav-item active">
-  <a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+<li class="nav-item {{ ($judul == 'Beranda') ? 'active' : '' }}">
+  <a href="{{ url('/home') }}" class="collapsed" aria-expanded="false">
     <i class="fas fa-home"></i>
     <p>Beranda</p>
   </a>
 </li>
 
-@if ($user->level == 'admin')
-    <li class="nav-section">
-        <li class="nav-item">
-        <a data-toggle="collapse" href="#base">
-            <i class="fas fa-layer-group"></i>
-            <p>Transaksi</p>
-        </a>
-    </li>
-    <li class="nav-item">
+<li class="nav-item {{ ($judul == 'Transaksi') ? 'active' : '' }}">
+<a href="{{ url('/kategori') }}">
+    <i class="fas fa-layer-group"></i>
+    <p>Products</p>
+</a>
+</li>
+@if ($masuk->level == 'admin')
+    <li class="nav-item {{ ($judul == 'Akun') ? 'active' : '' }}">
     <a href="{{ url('account') }}">
         <i class="fas fa-th-list"></i>
         <p>Akun</p>

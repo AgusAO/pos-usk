@@ -1,7 +1,8 @@
-@extends('templates/main')
+@extends('layout.main')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/manage_account/new_account/style.css') }}">
 @endsection
+<?php $judul = 'Akun Baru' ?>
 @section('content')
 <div class="row page-title-header">
   <div class="col-12">
@@ -26,7 +27,7 @@
 				    <div class="col-12 d-flex flex-row align-items-center mt-2 mb-2">
 				    	<img src="{{ asset('pictures/default.jpg') }}" class="default-img mr-4" id="preview-foto">
 				    	<div class="btn-action">
-				    		<input type="file" name="foto" id="foto" hidden="">
+				    		<input type="file" name="foto" id="foto">
 				    		<button class="btn btn-sm upload-btn mr-1" type="button">Upload Foto</button>
 				    		<button class="btn btn-sm delete-btn" type="button">Hapus</button>
 				    	</div>

@@ -1,45 +1,13 @@
 @extends('layout/main')
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/manage_account/account/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/account/style.css') }}">
 @endsection
+<?php $judul = 'Akun' ?>
 @section('content')
-{{-- <div class="row page-title-header">
-  <div class="col-12">
-    <div class="page-header d-flex justify-content-between align-items-center">
-      <h4 class="page-title">Daftar Akun</h4>
-      <div class="d-flex justify-content-start">
-      	<div class="dropdown">
-	        <button class="btn btn-icons btn-inverse-primary btn-filter shadow-sm" type="button" id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          <i class="mdi mdi-filter-variant"></i>
-	        </button>
-	        <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton1">
-	          <h6 class="dropdown-header">Urut Berdasarkan :</h6>
-	          <div class="dropdown-divider"></div>
-	          <a href="#" class="dropdown-item filter-btn" data-filter="nama">Nama</a>
-            <a href="#" class="dropdown-item filter-btn" data-filter="email">Email</a>
-            <a href="#" class="dropdown-item filter-btn" data-filter="level">Posisi</a>
-	        </div>
-	      </div>
-        <div class="dropdown dropdown-search">
-          <button class="btn btn-icons btn-inverse-primary btn-filter shadow-sm ml-2" type="button" id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="mdi mdi-magnify"></i>
-          </button>
-          <div class="dropdown-menu search-dropdown" aria-labelledby="dropdownMenuIconButton1">
-            <div class="row">
-              <div class="col-11">
-                <input type="text" class="form-control" name="search" placeholder="Cari akun">
-              </div>
-            </div>
-          </div>
-        </div>
-	      <a href="{{ url('/account/new') }}" class="btn btn-icons btn-inverse-primary btn-new ml-2">
-	      	<i class="mdi mdi-plus"></i>
-	      </a>
-      </div>
-    </div>
-  </div>
-</div> --}}
-<div class="page-inner">
+{{-- @if (count($user) == 0)
+    <h1>Silahkan regristrasi terlebih dahulu</h1>
+@endif --}}
+{{-- <div class="page-inner">
     <div class="page-header">
         <h4 class="page-title">Dashboard</h4>
         <ul class="breadcrumbs">
@@ -59,9 +27,12 @@
           <i class="fas fa-plus" aria-hidden="true"></i>
         </a>
     </div>
-  </div>
+  </div> --}}
   <hr><br>
 <div class="page-category">
+  <div class="ml-md-auto py-2 mb-3 mt--3 py-md-0">
+    <a href="{{ url('account/new') }}" class="btn btn-secondary btn-round">Add User</a>
+  </div>
 <div class="row modal-group">
   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -144,7 +115,7 @@
                 </tr>
               </thead>
               <tbody>
-              	@foreach($users as $user)
+              	@foreach($user as $user)
                 <tr>
                   <td>
                   	<img src="{{ asset('pictures/' . $user->foto) }}">
@@ -179,8 +150,9 @@
 </div>
 </div>
 @endsection
-@section('script')
-<script src="{{ asset('js/manage_account/account/script.js') }}"></script>
+@push('script')
+  
+{{-- <script src="{{ asset('js/manage_account/account/script.js') }}"></script> --}}
 <script type="text/javascript">
   @if ($message = Session::get('create_success'))
     swal(
@@ -283,4 +255,4 @@
     $('input[name=nama_foto]').val('default.jpg');
   });
 </script>
-@endsection
+@endpush

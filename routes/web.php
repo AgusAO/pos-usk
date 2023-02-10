@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AkunManageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\profileManageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,18 +28,35 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('login', [LoginController::class, 'index'])->name('login');
     Route::post('login/proses', 'proses');
     Route::get('logout', 'logout');
+});
+
+Route::controller(AkunManageController::class)->group(function () {
     Route::post('first_akun', 'firstAkun');
-    Route::get('account', 'viewAkun');
+    Route::get('account/new', 'viewNewAccount');
+    Route::post('account/create', 'createAccount');
+    Route::get('account/delete/{id}', 'deleteAccount');
+
+    // Route::get('account', 'viewAkun');
+});
+
+Route::controller(profileManageController::class)->group(function () {
+    Route::get('/profile', 'viewProfile');
+
+    // Route::get('account', 'viewAkun');
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['middleware' => ['cekUserLogin:1']], function () {
+    Route::group(['middleware' => ['cekUserLogin:admin']], function () {
+        Route::resource('account', AkunManageController::class);
         Route::resource('beranda', Beranda::class);
         Route::resource('kategori',  KategoriController::class);
         Route::resource('penjualan',  PenjualanController::class);
     });
 
-    Route::group(['middleware' => ['cekUserLogin:2']], function () {
+    // Route::get('account/new', [AkunManageController::class, 'viewNewAccount']);
+
+    Route::group(['middleware' => ['cekUserLogin:kasir']], function () {
         Route::resource('penjualan', PenjualanController::class);
+        Route::resource('account', AkunManageController::class);
     });
 });
