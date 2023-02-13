@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AkunManageController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\profileManageController;
+use App\Http\Controllers\KategoriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,17 +48,19 @@ Route::controller(profileManageController::class)->group(function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['middleware' => ['cekUserLogin:admin']], function () {
+    // Route::group(['middleware' => ['cekUserLogin:admin']], function () {
         Route::resource('account', AkunManageController::class);
         Route::resource('beranda', Beranda::class);
-        Route::resource('kategori',  KategoriController::class);
+        Route::resource('/kategori',  CategoryController::class);
+        Route::get('/kategori/data',  [CategoryController::class, 'data'])->name('kategori.data');
         Route::resource('penjualan',  PenjualanController::class);
-    });
+    // });
 
     // Route::get('account/new', [AkunManageController::class, 'viewNewAccount']);
 
-    Route::group(['middleware' => ['cekUserLogin:kasir']], function () {
-        Route::resource('penjualan', PenjualanController::class);
-        Route::resource('account', AkunManageController::class);
-    });
+    // Route::group(['middleware' => ['cekUserLogin:kasir']], function () {
+    //     Route::resource('penjualan', PenjualanController::class);
+    //     Route::resource('account', AkunManageController::class);
+    //     Route::resource('kategori',  CategoryController::class);
+    // });
 });

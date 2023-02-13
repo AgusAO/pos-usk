@@ -147,7 +147,16 @@
 							</ul>
 					</div>
 					<div class="page-category">
-						@yield('content')
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-body">
+										@yield('content')
+									</div>
+								</div>
+							</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -219,7 +228,11 @@
 	<!-- Atlantis JS -->
 	<script src="{{ asset('/') }}atlantis/assets/js/atlantis.min.js"></script>
 
-	@stack('script')
+	{{-- validator --}}
+	<script src="{{ asset('/js/validator.min.js') }}"></script>
+
+
+	@stack('scripts')
 
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 	<script>

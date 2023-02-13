@@ -6,7 +6,7 @@
 </li>
 
 <li class="nav-item {{ ($judul == 'Transaksi') ? 'active' : '' }}">
-<a href="{{ url('/kategori') }}">
+<a href="{{ route('kategori.index') }}">
     <i class="fas fa-layer-group"></i>
     <p>Products</p>
 </a>

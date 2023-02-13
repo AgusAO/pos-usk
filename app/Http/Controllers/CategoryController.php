@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Categories;
+use Illuminate\Support\Facades\Auth;
 
-class KategoriController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,8 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
+        $masuk = Auth::user();
+        return view('produks.kategori.index', compact('masuk'));
     }
 
     /**
