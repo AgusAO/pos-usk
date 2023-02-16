@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('supplier_id');
             $table->decimal('total_price', 8, 2);
-            $table->integer('total_items');
+            $table->integer('total_item');
             $table->decimal('paid', 8, 2);
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->timestamps();

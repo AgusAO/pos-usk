@@ -23,7 +23,7 @@
 		</thead>
 		<tbody>
 			<td>1</td>
-      <td>ngntd</td>
+      <td>pakaian</td>
       <td></td>
 		</tbody>
 	</table>

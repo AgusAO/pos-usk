@@ -8,7 +8,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form role="form" action="" method="post">
+				<form role="form" action="{{ route('kategori/store') }}" method="post">
           @method('post')
 					<div class="row">
 						<div class="col-sm-12">
